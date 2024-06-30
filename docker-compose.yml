@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: "postgres"
+    restart: always
+    environment:
+      POSTGRES_DB: "news"
+      POSTGRES_USER: "postuser"
+      POSTGRES_PASSWORD: "qwerty"
+    ports:
+      - "5432:5432"
