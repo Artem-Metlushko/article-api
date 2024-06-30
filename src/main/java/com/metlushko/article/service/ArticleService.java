@@ -23,10 +23,10 @@ public class ArticleService {
     public Page<Article> getAllArticles(int page, int size) {
         return articleRepository.findAll(PageRequest.of(page, size));
     }
-    public long last7Days() {
+    public long getNumberOfArtciclesByLastDays() {
         LocalDate today = LocalDate.now();
         LocalDate sevenDaysAgo = today.minusDays(7);
-        return articleRepository.last7Days(sevenDaysAgo, today);
+        return articleRepository.countByPublishDateBetween(sevenDaysAgo, today);
     }
 
 }

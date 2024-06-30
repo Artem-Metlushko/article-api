@@ -9,5 +9,5 @@ import java.time.LocalDate;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long>, PagingAndSortingRepository<Article, Long> {
-    long last7Days(LocalDate startDate, LocalDate endDate);
+    long countByPublishDateBetween(LocalDate startDate, LocalDate endDate);
 }

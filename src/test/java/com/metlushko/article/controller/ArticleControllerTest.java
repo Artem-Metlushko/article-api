@@ -67,6 +67,7 @@ class ArticleControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     void testCreateArticle() throws Exception {
         when(articleMapper.toArticle(any(ArticleDto.class))).thenReturn(article);
         when(articleService.saveArticle(any(Article.class))).thenReturn(article);
@@ -81,6 +82,7 @@ class ArticleControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     void testGetAllArticles() throws Exception {
         Page<Article> articlePage = new PageImpl<>(Collections.singletonList(article));
         Pageable pageable = PageRequest.of(0, 10);
@@ -100,7 +102,7 @@ class ArticleControllerTest {
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testGetArticleStats() throws Exception {
-        when(articleService.last7Days()).thenReturn(5L);
+        when(articleService.getNumberOfArtciclesByLastDays()).thenReturn(5L);
 
         mockMvc.perform(get("/api/articles/statistics")
                         .contentType(MediaType.APPLICATION_JSON))

@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/articles")
 @RequiredArgsConstructor
@@ -45,7 +43,7 @@ public class ArticleController {
 
     @GetMapping("/statistics")
     public ResponseEntity<Long> getStatistics() {
-        long count = articleService.last7Days();
+        long count = articleService.getNumberOfArtciclesByLastDays();
         return new ResponseEntity<>(count, HttpStatus.OK);
     }
 

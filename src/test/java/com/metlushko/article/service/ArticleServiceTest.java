@@ -78,9 +78,9 @@ class ArticleServiceTest {
         LocalDate sevenDaysAgo = today.minusDays(7);
         long expectedCount = 5L;
 
-        when(articleRepository.last7Days(sevenDaysAgo, today)).thenReturn(expectedCount);
+        when(articleRepository.countByPublishDateBetween(sevenDaysAgo, today)).thenReturn(expectedCount);
 
-        long actualCount = articleService.last7Days();
+        long actualCount = articleService.getNumberOfArtciclesByLastDays();
 
         assertEquals(expectedCount, actualCount);
     }
