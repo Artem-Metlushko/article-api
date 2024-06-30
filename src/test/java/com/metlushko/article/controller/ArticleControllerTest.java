@@ -109,4 +109,11 @@ class ArticleControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("5"));
     }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void accessStatsEndpointWithAdminRole() throws Exception {
+        mockMvc.perform(get("/api/articles/statistics"))
+                .andExpect(status().isOk());
+    }
 }
