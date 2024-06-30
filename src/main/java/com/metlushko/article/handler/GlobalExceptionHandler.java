@@ -1,4 +1,4 @@
-package com.metlushko.article.exception;
+package com.metlushko.article.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
