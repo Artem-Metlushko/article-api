@@ -71,4 +71,19 @@ class ArticleServiceTest {
         assertEquals("Title", result.getContent().get(0).getTitle());
         verify(articleRepository, times(1)).findAll(pageable);
     }
+
+    @Test
+    void testLast7Days() {
+        LocalDate today = LocalDate.now();
+        LocalDate sevenDaysAgo = today.minusDays(7);
+        long expectedCount = 5L;
+
+        when(articleRepository.last7Days(sevenDaysAgo, today)).thenReturn(expectedCount);
+
+        long actualCount = articleService.last7Days();
+
+        assertEquals(expectedCount, actualCount);
+    }
+
+
 }

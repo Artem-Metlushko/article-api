@@ -42,4 +42,11 @@ public class ArticleController {
         Page<Article> articles = articleService.getAllArticles(page, size);
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<Long> getStatistics() {
+        long count = articleService.last7Days();
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
 }

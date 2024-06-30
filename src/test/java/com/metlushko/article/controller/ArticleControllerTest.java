@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 
 @WebMvcTest(ArticleController.class)
@@ -93,5 +95,16 @@ class ArticleControllerTest {
                 .andExpect(jsonPath("$.content[0].title").value("Title"))
                 .andExpect(jsonPath("$.content[0].author").value("Author"))
                 .andExpect(jsonPath("$.content[0].content").value("Content"));
+    }
+
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void testGetArticleStats() throws Exception {
+        when(articleService.last7Days()).thenReturn(5L);
+
+        mockMvc.perform(get("/api/articles/statistics")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string("5"));
     }
 }
