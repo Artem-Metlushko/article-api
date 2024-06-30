@@ -5,6 +5,7 @@ import com.metlushko.article.entity.Article;
 import com.metlushko.article.mapper.ArticleMapper;
 import com.metlushko.article.service.ArticleService;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(ArticleController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class ArticleControllerTest {
 
     @Autowired
@@ -49,6 +51,8 @@ class ArticleControllerTest {
 
     private Article article;
     private ArticleDto articleDTO;
+
+
 
     @BeforeEach
     void setUp() {
