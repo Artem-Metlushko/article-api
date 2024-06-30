@@ -7,6 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +26,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@AutoConfigureMockMvc(addFilters = false)
 class ArticleServiceTest {
 
     @Mock
@@ -74,11 +78,12 @@ class ArticleServiceTest {
 
     @Test
     void testLast7Days() {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.of(2024, 6, 30);
         LocalDate sevenDaysAgo = today.minusDays(7);
         long expectedCount = 5L;
 
         when(articleRepository.countByPublishDateBetween(sevenDaysAgo, today)).thenReturn(expectedCount);
+        ArticleService articleService = new ArticleService(articleRepository);
 
         long actualCount = articleService.getNumberOfArtciclesByLastDays();
 
